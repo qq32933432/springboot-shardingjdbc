@@ -15,6 +15,7 @@ import com.google.common.collect.Range;
  */
 public class SingleKeyModuloDatabaseShardingAlgorithm implements SingleKeyDatabaseShardingAlgorithm<Integer> {
 
+    @Override
     public String doEqualSharding(Collection<String> availableTargetNames, ShardingValue<Integer> shardingValue) {
         for (String each : availableTargetNames) {
             if (each.endsWith(shardingValue.getValue() % 2 + "")) {
@@ -24,6 +25,7 @@ public class SingleKeyModuloDatabaseShardingAlgorithm implements SingleKeyDataba
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public Collection<String> doInSharding(Collection<String> availableTargetNames,
             ShardingValue<Integer> shardingValue) {
         Collection<String> result = new LinkedHashSet<>(availableTargetNames.size());
@@ -38,6 +40,7 @@ public class SingleKeyModuloDatabaseShardingAlgorithm implements SingleKeyDataba
         return result;
     }
 
+    @Override
     public Collection<String> doBetweenSharding(Collection<String> availableTargetNames,
             ShardingValue<Integer> shardingValue) {
         Collection<String> result = new LinkedHashSet<>(availableTargetNames.size());
