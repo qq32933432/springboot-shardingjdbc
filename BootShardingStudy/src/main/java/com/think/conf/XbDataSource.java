@@ -21,7 +21,7 @@ import com.dangdang.ddframe.rdb.sharding.api.strategy.table.TableShardingStrateg
 
 /***
  * sharding-jdbc 配置数据源和分库分表规则
- * 
+ *
  * @author donghuating
  *
  */
@@ -48,7 +48,12 @@ public class XbDataSource {
         for (int i = 0; i < 2; i++) {
             pList.add("t_order_" + i);
         }
-        tableRuleList.add(new TableRule.TableRuleBuilder("t_order").actualTables(pList).dataSourceRule(dataSourceRule)
+        tableRuleList
+                .add(
+                        new TableRule.TableRuleBuilder("t_order")
+                        .actualTables(pList)
+                        .dataSourceRule(dataSourceRule)
+
                 .tableShardingStrategy(new TableShardingStrategy("order_id", new ProgramShardingAlgorithm())).build());
         ShardingRule shardingRule = ShardingRule.builder().dataSourceRule(dataSourceRule)
                 .databaseShardingStrategy(

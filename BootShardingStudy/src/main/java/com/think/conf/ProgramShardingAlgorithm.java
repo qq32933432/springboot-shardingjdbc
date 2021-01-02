@@ -15,6 +15,7 @@ import com.google.common.collect.Range;
  */
 public class ProgramShardingAlgorithm implements SingleKeyTableShardingAlgorithm<Integer> {
 
+    @Override
     public String doEqualSharding(Collection<String> availableTargetNames, ShardingValue<Integer> shardingValue) {
         for (String each : availableTargetNames) {
             if (each.endsWith(shardingValue.getValue() % 2 + "")) {
@@ -24,6 +25,7 @@ public class ProgramShardingAlgorithm implements SingleKeyTableShardingAlgorithm
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public Collection<String> doInSharding(Collection<String> availableTargetNames,
             ShardingValue<Integer> shardingValue) {
         Collection<String> result = new LinkedHashSet<String>(availableTargetNames.size());
@@ -38,6 +40,7 @@ public class ProgramShardingAlgorithm implements SingleKeyTableShardingAlgorithm
         return result;
     }
 
+    @Override
     public Collection<String> doBetweenSharding(Collection<String> availableTargetNames,
             ShardingValue<Integer> shardingValue) {
         Collection<String> result = new LinkedHashSet<String>(availableTargetNames.size());
