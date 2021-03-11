@@ -51,12 +51,13 @@ public class XbDataSource {
         tableRuleList
                 .add(
                         new TableRule.TableRuleBuilder("t_order")
-                        .actualTables(pList)
-                        .dataSourceRule(dataSourceRule)
-
-                .tableShardingStrategy(new TableShardingStrategy("order_id", new ProgramShardingAlgorithm())).build());
+                                .actualTables(pList)
+                                .dataSourceRule(dataSourceRule)
+                                // 指定分表标识为 order_id
+                                .tableShardingStrategy(new TableShardingStrategy("order_id", new ProgramShardingAlgorithm())).build());
         ShardingRule shardingRule = ShardingRule.builder().dataSourceRule(dataSourceRule)
                 .databaseShardingStrategy(
+                        // 指定分库标识为 user_id
                         new DatabaseShardingStrategy("user_id", new SingleKeyModuloDatabaseShardingAlgorithm()))
                 .tableRules(tableRuleList).build();
         shardingDataSource = ShardingDataSourceFactory.createDataSource(shardingRule);

@@ -17,9 +17,15 @@ import org.springframework.context.annotation.Primary;
 @Configuration
 public class DataSourceConfig {
 
+    /**
+     *
+     * 通过配置文件中的配置构建 DataSource,
+     * prefix = "spring.datasource.primary"为配置文件的前缀
+     * @return
+     *
+     */
     @Bean(name = "primaryDataSource")
     @Primary
-    // 配置文件中前缀
     @ConfigurationProperties(prefix = "spring.datasource.primary")
     public DataSource primaryDataSource() {
         return DataSourceBuilder.create().build();

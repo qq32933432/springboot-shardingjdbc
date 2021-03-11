@@ -9,15 +9,15 @@ import com.google.common.collect.Range;
 
 /**
  * table 分片算法
- * 
- * @author donghuating
  *
+ * @author donghuating
  */
 public class ProgramShardingAlgorithm implements SingleKeyTableShardingAlgorithm<Integer> {
 
     @Override
     public String doEqualSharding(Collection<String> availableTargetNames, ShardingValue<Integer> shardingValue) {
         for (String each : availableTargetNames) {
+            // 根据分表标识即order_id是奇数还是偶数来分片，如果分表数大于9这里会有BUG
             if (each.endsWith(shardingValue.getValue() % 2 + "")) {
                 return each;
             }
@@ -27,7 +27,7 @@ public class ProgramShardingAlgorithm implements SingleKeyTableShardingAlgorithm
 
     @Override
     public Collection<String> doInSharding(Collection<String> availableTargetNames,
-            ShardingValue<Integer> shardingValue) {
+                                           ShardingValue<Integer> shardingValue) {
         Collection<String> result = new LinkedHashSet<String>(availableTargetNames.size());
         Collection<Integer> values = shardingValue.getValues();
         for (Integer value : values) {
@@ -42,7 +42,7 @@ public class ProgramShardingAlgorithm implements SingleKeyTableShardingAlgorithm
 
     @Override
     public Collection<String> doBetweenSharding(Collection<String> availableTargetNames,
-            ShardingValue<Integer> shardingValue) {
+                                                ShardingValue<Integer> shardingValue) {
         Collection<String> result = new LinkedHashSet<String>(availableTargetNames.size());
         Range<Integer> range = shardingValue.getValueRange();
         for (Integer i = range.lowerEndpoint(); i <= range.upperEndpoint(); i++) {
